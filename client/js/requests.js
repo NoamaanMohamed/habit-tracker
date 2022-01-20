@@ -7,7 +7,7 @@ async function getAllUserHabits(){
             }
         }
         
-        let url = new URL('http://localhost:3000/habitplans');
+        let url = new URL('https://whispering-lowlands-57408.herokuapp.com/habitplans');
         url.searchParams.append('date',document.querySelector('.inputHabitsDate').value);
         console.log(url)
         const response = await fetch(url, options);
@@ -31,7 +31,7 @@ async function getAllHabits(){
             }
         }
         console.log(options)
-        const response = await fetch('http://localhost:3000/habits', options);
+        const response = await fetch('https://whispering-lowlands-57408.herokuapp.com/habits', options);
         const data = await response.json();
         if(data.err){
             console.warn(data.err);
@@ -63,7 +63,7 @@ async function postNewHabit(e){
             }
         }
         console.log(options)
-        const response = await fetch('http://localhost:3000/habitplans', options);
+        const response = await fetch('https://whispering-lowlands-57408.herokuapp.com/habitplans', options);
         const data = await response.json();
         if(data.err){
             console.warn(data.err);
@@ -92,7 +92,7 @@ async function postHabitFact(e){
                 'Content-Type': "application/json"
             }
         };
-        let url = new URL('http://localhost:3000/habitfacts');
+        let url = new URL('https://whispering-lowlands-57408.herokuapp.com/habitfacts');
         url.searchParams.append('date',document.querySelector('.inputHabitsDate').value);
         console.log(options)
         
@@ -117,7 +117,7 @@ async function getHabitFacts(hplan_id){
             }
         }
         
-        let url = new URL(`http://localhost:3000/habitfacts/${hplan_id}`);
+        let url = new URL(`https://whispering-lowlands-57408.herokuapp.com/habitfacts/${hplan_id}`);
         url.searchParams.append('date',document.querySelector('.inputHabitsDate').value);
         console.log(url)
         const response = await fetch(url, options);

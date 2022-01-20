@@ -16,7 +16,7 @@ async function requestLogin(e){
             headers: { "Content-Type": "application/json" }
         };
     
-        const r = await fetch(`http://localhost:3000/auth/login`, options)
+        const r = await fetch(`https://whispering-lowlands-57408.herokuapp.com/auth/login`, options)
         const data = await r.json()
         if (data.err){ throw Error(data.err); }
         login(data.token);
@@ -39,7 +39,7 @@ async function requestRegistration(e) {
             body: JSON.stringify(registerData),
             headers: { "Content-Type": "application/json" }
         };
-        const r = await fetch(`http://localhost:3000/auth/register`, options)
+        const r = await fetch(`https://whispering-lowlands-57408.herokuapp.com/auth/register`, options)
         const data = await r.json()
         if (data.err){ throw Error(data.err) }
         requestLogin(e);

@@ -12,7 +12,7 @@ async function requestLogin(e){
             body: JSON.stringify(loginData)
         }
         console.log(options)
-        const r = await fetch(`http://localhost:3000/auth/login`, options)
+        const r = await fetch(`https://whispering-lowlands-57408.herokuapp.com/auth/login`, options)
         const data = await r.json()
         console.log("login with data",data);
         if (data.err) { throw new Error('Login not authorised'); }
@@ -38,7 +38,7 @@ async function requestRegistration(e) {
             body: JSON.stringify(registerData)
         }
         console.log(options);
-        const r = await fetch(`http://localhost:3000/auth/register`, options)
+        const r = await fetch(`https://whispering-lowlands-57408.herokuapp.com/auth/register`, options)
         const data = await r.json()
         console.log(data);
         if (data.err){ throw Error(data.err) }
