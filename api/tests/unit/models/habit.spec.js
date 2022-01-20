@@ -1,8 +1,8 @@
-const Habit = require('../../models/habit')
+const Habit = require('../../../models/habit')
 const pg = require('pg');
 jest.mock('pg');
 
-const db = require('../../db_config/config');
+const db = require('../../../db_config/config');
 
 
 describe('Habit', () => {

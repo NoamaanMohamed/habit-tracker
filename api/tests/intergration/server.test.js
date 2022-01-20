@@ -3,18 +3,20 @@ const request = require("supertest");
 const server = require("../../server");
 const express = require('express');
 const jwt = require('jsonwebtoken');
-const { response } = require("../../server");
+
+
+
 
 describe('API server', () => {
     let api 
     let testUser = {
         "username": "trumpetgems",
         "email": "friend@circus.dk",
-        "passwordDigest": "ahudnthpdohbapbb243"
+        "password": "ahudnthpdohbapbb243"
     }
     let testLogin = {
         "email": "friend@circus.dk",
-        "passwordDigest": "ahudnthpdohbapbb243"
+        "password": "ahudnthpdohbapbb243"
     }
     let testId = {
         "user_id": 1,
@@ -24,7 +26,7 @@ describe('API server', () => {
     let token;
 
     beforeAll(() => {
-        // start the server and store it in the api variable
+        // start the server
         api = server.listen(3000, () => console.log('Test server running on port 3000'))
     })
 
@@ -52,8 +54,8 @@ describe('API server', () => {
             .send(testUser) 
             .set("Accept", "application/json")
             .set('Content-Type', 'application/json')
-            .expect(201, done) 
             .expect({msg: 'User created'}, done) 
+            .expect(201) 
     })
 
     test('it logs in a user', done => { 
@@ -72,18 +74,10 @@ describe('API server', () => {
 
     })
     
-    test('returns correct user', done => {
-        let user = jwt.decode(token);
-        let userId = user.id;
-        request(api)
-        .get(`/users/${userId}`)
-        .set('Authorization', `Bearer ${token}`)
-        .expect(200, done)
-    })
-    
+
     test('returns a habit userId', done => {
         request(api)
-            .post('/habitplans')
+            .post('/habits')
             .send('testId')
             .set('Accept', 'application/json')
             .expect(function(res) {
@@ -107,11 +101,11 @@ describe('API server', () => {
         .expect(201,done)
     })
 
-    // test('returns users habit by Id', done => {
-    //     let user = jwt.decode(token);
-    //     let id = user.id;
+    // test('returns users habit', done => {
     //     request(api)
-    //     .post('/habitplans')
+    //     .get('/habits')
+    //     .expect(200,done)
+
     // })
 
     

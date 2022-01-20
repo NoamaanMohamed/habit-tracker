@@ -3,7 +3,7 @@
 <html lang="en">
 
 <head>
-    <title>Code coverage report for api/middleware/auth.js</title>
+    <title>Code coverage report for api/models/habit_facts.js</title>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="../../prettify.css" />
     <link rel="stylesheet" href="../../base.css" />
@@ -19,34 +19,34 @@
 <body>
 <div class='wrapper'>
     <div class='pad1'>
-        <h1><a href="../../index.html">All files</a> / <a href="index.html">api/middleware</a> auth.js</h1>
+        <h1><a href="../../index.html">All files</a> / <a href="index.html">api/models</a> habit_facts.js</h1>
         <div class='clearfix'>
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
+                <span class="strong">41.17% </span>
                 <span class="quiet">Statements</span>
-                <span class='fraction'>6/12</span>
-            </div>
-        
-            
-            <div class='fl pad1y space-right2'>
-                <span class="strong">50% </span>
-                <span class="quiet">Branches</span>
-                <span class='fraction'>1/2</span>
+                <span class='fraction'>7/17</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
                 <span class="strong">100% </span>
-                <span class="quiet">Functions</span>
-                <span class='fraction'>1/1</span>
+                <span class="quiet">Branches</span>
+                <span class='fraction'>0/0</span>
             </div>
         
             
             <div class='fl pad1y space-right2'>
-                <span class="strong">45.45% </span>
+                <span class="strong">40% </span>
+                <span class="quiet">Functions</span>
+                <span class='fraction'>2/5</span>
+            </div>
+        
+            
+            <div class='fl pad1y space-right2'>
+                <span class="strong">46.66% </span>
                 <span class="quiet">Lines</span>
-                <span class='fraction'>5/11</span>
+                <span class='fraction'>7/15</span>
             </div>
         
             
@@ -61,7 +61,7 @@
             </div>
         </template>
     </div>
-    <div class='status-line medium'></div>
+    <div class='status-line low'></div>
     <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -101,18 +101,21 @@
 <a name='L36'></a><a href='#L36'>36</a></td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -122,53 +125,50 @@
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">const jwt = require("jsonwebtoken");
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span></td><td class="text"><pre class="prettyprint lang-js">const db = require('../db_config/config');
 &nbsp;
-function verifyToken(req, res, next){
-    // ginger replace 
-    // const header = req.headers['authorization'];
-    // if (header) {
-    //     const token = header.split(' ')[1];
-    //     jwt.verify(token, process.env.SECRET, async (err, data) =&gt; {
-    //         console.log(data);
-    //         if(err){
-    //             res.status(403).json({ err: 'Invalid token' })
-    //         } else {
-    //             console.log('next')
-    //             next();
-    //         }
-    //     })
-    // } else {
-    //     res.status(403).json({ err: 'Missing token' })
-    // }
-    // ginger add
-    const token = req.header('authorization');
-    console.log("token", token)
-    if(!token) return res.status(401).send('Access denied!');
-<span class="cstat-no" title="statement not covered" >    try {</span>
-        const verifiedToken = <span class="cstat-no" title="statement not covered" >jwt.verify(token, process.env.TOKEN_SECRET);</span>
-<span class="cstat-no" title="statement not covered" >        req.user = verifiedToken;</span>
-<span class="cstat-no" title="statement not covered" >        console.log("user",req.user);</span>
-<span class="cstat-no" title="statement not covered" >        next();</span>
-    } catch (error) {
-<span class="cstat-no" title="statement not covered" >        res.status(400).send('Invalid token');</span>
+&nbsp;
+const Habit_Plan = require('./habit_plans');
+&nbsp;
+class Habit_Facts{
+<span class="fstat-no" title="function not covered" >    co</span>nstructor(data, habitPlan){
+<span class="cstat-no" title="statement not covered" >        this.id=data.id;</span>
+<span class="cstat-no" title="statement not covered" >        this.hfactTimestamp=data.hfact_timestamp;</span>
+<span class="cstat-no" title="statement not covered" >        this.hPlanId={id: data.id, path: `habitplans}`}</span>
     }
 &nbsp;
+<span class="fstat-no" title="function not covered" >    st</span>atic findByID(hPlanId,hfact_timestamp){
+<span class="cstat-no" title="statement not covered" >        return new Promise (<span class="fstat-no" title="function not covered" >as</span>ync (resolve, reject) =&gt; {</span>
+<span class="cstat-no" title="statement not covered" >            try{</span>
+            let count = <span class="cstat-no" title="statement not covered" >await db.query(`SELECT count(*) FROM habit_facts WHERE hplan_id = $1 AND DATE(hfact_timestamp) = $2;`[hPlanId, hfact_timestamp]);</span> <span class="cstat-no" title="statement not covered" >resolve(count);</span>
+        }catch (err) {
+<span class="cstat-no" title="statement not covered" >            reject('habit not found');</span>
+        }
+    });   
+    }
+&nbsp;
+    static create(hplan_id){
+        return new Promise (async (resolve, reject) =&gt;{
+            try{
+                let habitplans = await Habit_Plan.findById(hplan_id);
+                let result = <span class="cstat-no" title="statement not covered" >await db.query(`INSERT INTO habit_facts(hplan_id,hfact_timestamp) VALUES ($1,CURRENT_TIMESTAMP);`,[habitplans.id]);</span> <span class="cstat-no" title="statement not covered" >resolve (result.rows[0]);</span>
+            } catch (err) {
+              reject('timestamp could not be created');
+            }
+        })
+    }
 }
-module.exports = {
-    verifyToken
-}</pre></td></tr></table></pre>
+&nbsp;
+&nbsp;
+module.exports = Habit_Facts;</pre></td></tr></table></pre>
 
                 <div class='push'></div><!-- for sticky footer -->
             </div><!-- /wrapper -->
