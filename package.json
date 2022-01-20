@@ -38,5 +38,7 @@
     "nodemon": "^2.0.15",
     "supertest": "^6.2.1"
   },
-  "description": ""
+  "engines": {
+    "node": "12.18.4"
+  }
 }
