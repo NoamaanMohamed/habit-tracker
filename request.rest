@@ -1,9 +1,9 @@
-GET http://localhost:3000/users
+GET https://whispering-lowlands-57408.herokuapp.com/users
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkhlbGxvIiwiZW1haWwiOiJIZWxsb0Bsb2wiLCJpYXQiOjE2NDI1MDI0NTIsImV4cCI6MTY0MjUwMjUxMn0.3iE9rJHyZjpRhBVnQvrxtY8ct6Vbrg9HO-GwzBMYFoI
 
 ###
 
-POST http://localhost:3000/auth/register
+POST https://whispering-lowlands-57408.herokuapp.com/auth/register
 Content-Type: application/json
 
 {
@@ -13,7 +13,7 @@ Content-Type: application/json
 }
 
 ###
-POST http://localhost:3000/auth/login
+POST https://whispering-lowlands-57408.herokuapp.com/auth/login
 Content-Type: application/json
 
 {    
@@ -22,7 +22,7 @@ Content-Type: application/json
 }
 
 ###
-GET http://localhost:3000/habits
+GET https://whispering-lowlands-57408.herokuapp.com/habits
 Content-Type: application/json
 authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkhlbGxvIiwiZW1haWwiOiJIZWxsb0Bsb2wiLCJpYXQiOjE2NDI1ODc2ODh9.gb-gTLKuKZi1Wx_SvDYBEsUdu1tCy_WCC77sbUM0V0I
 
@@ -35,7 +35,7 @@ authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkhlbGxvIiwi
 
 ###
 
-GET http://localhost:3000/habitplans?date=2022-01-11
+GET https://whispering-lowlands-57408.herokuapp.com/habitplans?date=2022-01-11
 Content-Type: application/json
 authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkhlbGxvIiwiZW1haWwiOiJIZWxsb0Bsb2wiLCJ1c2VySUQiOjMsImlhdCI6MTY0MjY4MDAxOX0.9qI8mPWnHTxDCC6eVEs9uE7nZSAZhJQ0Mbav03ZgWa0
 
@@ -49,7 +49,7 @@ authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkhlbGxvIiwi
 # INSERT INTO habit_plans VALUES(6, 3,1, '2022-01-10','9999-12-31', 2);
 ###
 
-POST http://localhost:3000/habitplans
+POST https://whispering-lowlands-57408.herokuapp.com/habitplans
 Content-Type: application/json
 authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6IkhlbGxvIiwiZW1haWwiOiJIZWxsb0Bsb2wiLCJpYXQiOjE2NDI1NjAzODV9.2YHkjqZNqir1Ko7Bc0MF1qm1gSwfnvn1mdkio87rpyI
 
