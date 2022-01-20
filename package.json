@@ -1,0 +1,42 @@
+{
+    "name": "habitproject",
+    "version": "1.0.0",
+    "description": "",
+    "main": "api/index.js",
+    "scripts": {
+        "start": "node index.js",
+        "test": "jest --watchAll",
+        "unitTests": "jest --testPathPattern=/unit/ --watchAll --verbose",
+        "coverage": "jest --coverage"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Pilks-pixel/habit-tracker.git"
+    },
+    "keywords": [],
+    "author": "",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Pilks-pixel/habit-tracker/issues"
+    },
+    "homepage": "https://github.com/Pilks-pixel/habit-tracker#readme",
+    "dependencies": {
+        "bcryptjs": "^2.4.3",
+        "body-parser": "^1.19.1",
+        "cors": "^2.8.5",
+        "ejs": "^3.1.6",
+        "express": "^4.17.2",
+        "express-flash": "^0.0.2",
+        "express-session": "^1.17.2",
+        "jsonwebtoken": "^8.5.1",
+        "passport": "^0.5.2",
+        "passport-local": "^1.0.0",
+        "pg": "^8.7.1"
+    },
+    "devDependencies": {
+        "dotenv": "^14.1.0",
+        "jest": "^27.4.7",
+        "nodemon": "^2.0.15",
+        "supertest": "^6.2.1"
+    }
+}
