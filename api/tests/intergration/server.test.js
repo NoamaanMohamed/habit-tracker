@@ -18,20 +18,16 @@ describe('API server', () => {
         "email": "friend@circus.dk",
         "password": "ahudnthpdohbapbb243"
     }
-    
-    let testLogin2 = {
-        "email": "friend@circus.dk",
-        "password": ""
-    }
-    
-    let token
+    let testId = {
+        "user_id": 1,
 
-    
-    
+    }
+
+    let token;
 
     beforeAll(() => {
         // start the server
-        api = server.listen(5000, () => console.log('Test server running on port 3000'))
+        api = server.listen(3000, () => console.log('Test server running on port 3000'))
     })
 
     afterAll(done => {
@@ -46,12 +42,11 @@ describe('API server', () => {
             .expect(200, done) 
     })
 
-    // test('it responds with all users and status 200', done => { 
-    //     request(api) 
-    //         .get('/users') 
-    //         .expect(200)
-             
-    // })
+    test('it responds with all users and status 200', done => { 
+        request(api) 
+            .get('/users') 
+            .expect(200, done) 
+    })
 
     test('it registers a user', done => { 
         request(api) 
@@ -59,8 +54,8 @@ describe('API server', () => {
             .send(testUser) 
             .set("Accept", "application/json")
             .set('Content-Type', 'application/json')
-            .expect(201) 
             .expect({msg: 'User created'}, done) 
+            .expect(201) 
     })
 
     test('it logs in a user', done => { 
@@ -72,23 +67,7 @@ describe('API server', () => {
             .expect(200) 
             .end((err, response) => {
                 console.log(response.body);
-                token = response.body.token
-                console.log(token);
-                done();
-            })
-
-    })
-
-    test('it returns an status 400 if password missing', done => { 
-        request(api)
-            .post('/auth/login') 
-            .send(testLogin2)
-            .set("Accept", "application/json")
-            .set('Content-Type', 'application/json')
-            .expect(400) 
-            .end((err, response) => {
-                console.log(response.body);
-                token = response.body.token
+                token = response.body.split(' ')[1];
                 console.log(token);
                 done();
             })
@@ -97,14 +76,10 @@ describe('API server', () => {
     
 
     test('returns a habit userId', done => {
-        let testId = {
-            "user_id": 1,
-        }
         request(api)
             .post('/habits')
-            .send(testId)
+            .send('testId')
             .set('Accept', 'application/json')
-            .query(token)
             .expect(function(res) {
                 res.body.user_Id = '1';
             })
@@ -115,7 +90,7 @@ describe('API server', () => {
 
     test('creates a habit', done => {
         let user = jwt.decode(token);
-        let id = user
+        let id = user.id;
         let testHabit = {id: 1, habit_name: 'Drink Water'}
         request(api)
         .post('/habits')

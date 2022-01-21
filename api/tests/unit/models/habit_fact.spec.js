@@ -15,7 +15,7 @@ describe('Habit Facts', () => {
             let habitData = { hPlanId: 1, hfactTimestamp: '2022-01-11 15:10:25-07'}
             jest.spyOn(db, 'query')
                 .mockResolvedValueOnce({rows: [ habitData] });
-            const result = await habitFacts.findByID(1);
+            const result = await habitFacts.findById(1);
             expect(result).toBeInstanceOf(habitFacts)
         })
     });
