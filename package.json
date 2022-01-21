@@ -424,8 +424,5 @@
   "bugs": {
     "url": "https://github.com/NoamaanMohamed/habit-tracker/issues"
   },
-  "homepage": "https://github.com/NoamaanMohamed/habit-tracker#readme",
-  "devDependencies": {
-    "dotenv": "^14.2.0"
-  }
+  "homepage": "https://github.com/NoamaanMohamed/habit-tracker#readme"
 }
