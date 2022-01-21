@@ -8,8 +8,7 @@ async function requestLogin(e){
         };
         const options = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*' },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(loginData)
         }
         console.log(options)
@@ -35,8 +34,7 @@ async function requestRegistration(e) {
         };
         const options = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json',
-            'Access-Control-Allow-Origin': '*' },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(registerData)
         }
         console.log(options);
