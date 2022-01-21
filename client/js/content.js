@@ -1,3 +1,5 @@
+// const { deepStrictEqual } = require("assert");
+
 const habits = [
     {
         hplan_id: 0,
@@ -117,6 +119,7 @@ function renderRegisterForm() {
 async function renderMain() {
     renderNavbar();
     renderDashboard();
+    renderFooter();
 }
 
 function renderNavbar() {
@@ -152,11 +155,18 @@ function renderNavbar() {
 }
 
 function renderDashboard() {
-    main.innerHTML = ''
+    main.innerHTML = '';
+    body.classList.add('pattern');
     showDashboardTitle();
-    // showTrackNewHabitForm();
-    // showAllHabits();
     showDashboard();
+}
+
+function renderFooter() {
+    footer.innerHTML = '';
+    const footerDiv =  document.createElement('div');
+    footerDiv.classList.add('footer-m');
+    footerDiv.innerHTML = 'made by  <i class="fas fa-coffee"></i>  Coffee before Coding'
+    footer.appendChild(footerDiv);
 }
 
 function showDashboardTitle() {
@@ -166,11 +176,15 @@ function showDashboardTitle() {
     dashboard.classList.add('dashboard');
     main.appendChild(dashboard);
 
+    const dashboardContainer = document.createElement('div');
+    dashboardContainer.classList.add('dash-container');
+    dashboard.appendChild(dashboardContainer);
+
     const dashboardGrid = document.createElement('div');
     dashboardGrid.classList.add('dash-row');
     dashboardGrid.classList.add('row');
     dashboardGrid.classList.add('justify-content-between');
-    dashboard.appendChild(dashboardGrid);
+    dashboardContainer.appendChild(dashboardGrid);
     
     const dashboardTitle = document.createElement('div');
     dashboardTitle.classList.add('col-md-9');
@@ -188,7 +202,7 @@ function showDashboardTitle() {
     const divContainer= document.createElement('div');
     divContainer.classList.add('container');
     divContainer.classList.add('habit-cont');
-    document.querySelector('.dashboard').appendChild(divContainer);
+    dashboardContainer.appendChild(divContainer);
 }
 
 function showDashboard() {
@@ -221,7 +235,7 @@ function showTrackNewHabitForm () {
 
     const labelTrackNew = document.createElement('div');
     labelTrackNew.classList.add('labelTrackNew-row');
-    labelTrackNew.innerHTML= '<label class="labelTrackNew">Track new</label>';
+    labelTrackNew.innerHTML= '<label class="labelTrackNew">New Habit</label>';
     newHabitFrame.appendChild(labelTrackNew);
 
     const formTrackNew = document.createElement('form');
@@ -256,7 +270,7 @@ function showTrackNewHabitForm () {
     newBtnTrackHabit.classList.add('input-group');
     newBtnTrackHabit.classList.add('text-right');
     // newBtnTrackHabit.classList.add('mb-3');
-    newBtnTrackHabit.innerHTML = '<button class="btn btn-dark btnTrackHabit" type="submit">Track habit</button>';
+    newBtnTrackHabit.innerHTML = '<button class="btn btn-dark btnTrackHabit" type="submit">Track new habit</button>';
     formTrackNew.appendChild(newBtnTrackHabit);  
     document.querySelector('.btnTrackHabit').addEventListener('click', trackNewHabit);
 
@@ -313,18 +327,35 @@ function showUserHabit(habit) {
     // newHabitFrame.setAttribute('data-id', habit.hplan_id);
     newHabitCard.append(newHabitFrame);
     
-
     // const newTitleRow = document.createElement('div')
     // newTitleRow .classList.add('row');
     // newTitleRow.classList.add('title-row');
     // newHabitFrame.appendChild(newTitleRow);
 
-    const newHabitName = document.createElement('div');
-    newHabitName.classList.add('title-row');
+    const newTitleRow = document.createElement('div');
+    newTitleRow.classList.add('title-row');
     // newHabitName.innerText = habit.habit_name;
-    newHabitName.innerHTML = `<label class="habit-name">${habit.habit}</label> <p><a class="anchor-streak" href="#streak">streak info >> </a></p>`
-    newHabitFrame.appendChild(newHabitName);  
+    // newHabitName.innerHTML = `<label class="habit-name">${habit.habit}</label> <p><a class="anchor-streak" > see streak >> </a></p>`
+    newHabitFrame.appendChild(newTitleRow);  
 
+    const newHabitName = document.createElement('label');
+    newHabitName.classList.add('habit-name');
+    newHabitName.setAttribute('data-id', habit.id)
+    newHabitName.innerHTML = habit.habit;
+    newTitleRow.appendChild(newHabitName);  
+
+    const newPStreak = document.createElement('p');
+    newTitleRow.appendChild(newPStreak);
+
+    const newStreakLink = document.createElement('a');
+    newStreakLink.classList.add('anchor-streak');
+    newStreakLink.innerHTML = `see streak >>`
+    newStreakLink.setAttribute('data-id', habit.id);
+    newPStreak.appendChild(newStreakLink);
+
+    // streak info click event
+    newStreakLink.addEventListener('click', renderStreak);
+    
     const newHabitFreq = document.createElement('div');
     newHabitFreq.classList.add('habit-freq');
     // newHabitFreq.innerText = `${habit.frequency} time(s) per day`;
@@ -341,10 +372,10 @@ function showUserHabit(habit) {
     newShell.classList.add('shell');
     newBarRow.appendChild(newShell);
 
-    console.log(`width:${habitFact / habit.frequency*100}%`);
     const newBar = document.createElement('div');
     newBar.classList.add('bar');
-    newBar.setAttribute('style', `width:${100 - habitFact / habit.frequency*100}%`);
+    newBar.setAttribute('data-id', habit.id);
+    newBar.setAttribute('style', `width:${100 - habit.count / habit.frequency*100}%`);
     newShell.appendChild(newBar);
     // progress bar end    
 
@@ -359,8 +390,10 @@ function showUserHabit(habit) {
 
     const delSpan = document.createElement('span');
     delSpan.classList.add('delCross');
-    delSpan.innerHTML = '<i class="fa fa-times"></i>';
+    delSpan.innerHTML = `<i class="fa fa-times" data-id=${habit.id}></i>`;
+    delSpan.setAttribute('data-id', habit.id);
     footerHabit.appendChild(delSpan)
+    delSpan.addEventListener('click',updateEndDate);
 
     const btnAddFact = document.createElement('button');
     btnAddFact.classList.add('btnFact');
@@ -368,30 +401,31 @@ function showUserHabit(habit) {
     btnAddFact.setAttribute('data-id', habit.id);
     footerHabit.appendChild(btnAddFact);
     // click event - create habit fact for habit plan
-    btnAddFact.addEventListener('click', createHabitFact);
+    // btnAddFact.addEventListener('click', createHabitFact);
 
     const newHabitFact = document.createElement('label');
     newHabitFact.classList.add('habit-fact');
     newHabitFact.setAttribute('data-id', habit.id);
-    if(habitFact > 0) {
-        newHabitFact.innerHTML = habitFact;
-    } else {
-        newHabitFact.innerHTML = '0';
-    };
     footerHabit0.appendChild(newHabitFact);
 
     const newHabitPlan = document.createElement('label');
     newHabitPlan.classList.add('habit-plan');
     newHabitPlan.setAttribute('data-id', habit.id);
-    newHabitPlan.innerHTML = `/ ${habit.frequency}`;
+    // newHabitPlan.innerHTML = `/ ${habit.frequency}`;
     footerHabit0.appendChild(newHabitPlan);
 
-
-}
-
-function renderStreak(hplan_id) {
-    window.location.hash = '#streak';
-    console.log("streak info ",hplan_id);
+    if(habit.count > 0) {
+        if (habit.count >= habit.frequency) {
+            newHabitFact.innerHTML = '';
+            newHabitPlan.innerHTML = 'Complete!';  
+        } else {
+            newHabitFact.innerHTML = habit.count;
+            newHabitPlan.innerHTML = `/${habit.frequency}`;
+        }
+    } else {
+        newHabitFact.innerHTML = '0';
+        newHabitPlan.innerHTML = `/${habit.frequency}`;
+    };
 }
 
 function trackNewHabit(e) {
@@ -408,18 +442,173 @@ function createHabitFact(e) {
     if (habitPlan.innerHTML != "Complete!") {
         postHabitFact(e);
 
-        let fact = habitFact.innerHTML;
-        let plan = habitPlan.innerText[2];
+        let fact = Number(habitFact.innerHTML);
+        let plan = Number(habitPlan.innerText[1]);
         console.log(plan)
+        let newfact = fact + 1;
 
-        if (Number(fact)+1  == Number(plan)) {
+        if (newfact == plan) {
             habitFact.innerHTML = '';
             habitPlan.innerHTML = "Complete!"
         } else {
-            fact = Number(habitFact.innerHTML) + 1;
-            habitFact.innerHTML = fact;
+            // fact = fact + 1;
+            habitFact.innerHTML = newfact;
             console.log("fact",fact);
         }
+        // change bar
+        const bar = document.querySelector(`.bar[data-id='${id}']`);
+        bar.setAttribute('style', `width:${100 - newfact / plan*100}%`);
+
     }
        
+}
+
+async function renderStreak(e) {
+    // window.location.hash = '#streak';
+    const id = e.target.getAttribute('data-id')
+    
+    const userHabits = await getAllUserHabits(); 
+    // const habitData = appendHabits(userHabits,id);
+    const habitData = userHabits.filter(h => {return h.id==id});
+    
+    console.log("streak info for ", e.target, id, habitData[0] );
+
+    main.innerHTML = '';
+    showStreakTitle(id);
+    showStreak(id, habitData[0]);
+};
+
+// function appendHabits(habits,id) {
+//     return habits.filter(h => {return h.id==id});
+// }
+
+function showStreakTitle(id) {
+    const today = new Date().toISOString().substring(0, 10);
+
+    const streak = document.createElement('section');
+    streak.classList.add('streak');
+    main.appendChild(streak);
+
+    const streakContainer = document.createElement('div');
+    streakContainer.classList.add('streak-container');
+    streak.appendChild(streakContainer);
+
+    const streakGrid = document.createElement('div');
+    streakGrid.classList.add('streak-row');
+    streakGrid.classList.add('row');
+    streakGrid.classList.add('justify-content-between');
+    streakContainer.appendChild(streakGrid);
+    
+    const streakTitle = document.createElement('div');
+    streakTitle.classList.add('col-md-9');
+    streakTitle.innerHTML = '<h1 class="label-streak">Streak last 7 days</h1>'
+    streakGrid.append(streakTitle);
+
+    const streakDate = document.createElement('div');
+    streakDate.classList.add('col-md-3');
+    // dashboardDate.classList.add('justify-content-center');
+    streakDate.innerHTML = '<a class="dash-link" href=#> back to Dashboard</a><input type="date" class="form-control inputStreakDate" name="inputStreakDate">'
+    streakGrid.append(streakDate);
+    streakDate.querySelector('.inputStreakDate').setAttribute('value', today);
+    // streakDate.querySelector('.inputHabitsDate').addEventListener('change', showDashboard);
+    
+    const divContainer= document.createElement('div');
+    divContainer.classList.add('container');
+    divContainer.classList.add('streak-cont');
+    streakContainer.appendChild(divContainer);
+}
+
+async function showStreak(id, habitData) {
+    // set dates
+    const today = new Date().toISOString().substring(0, 10);
+
+    // let end_date = new Date(document.querySelector('.inputStreakDate').value)
+    let end_date = new Date(today);
+    let start_date0 = new Date(end_date);
+    start_date0.setDate(start_date0.getDate() - 7);
+    // let start_date = new Date(start_date0).toISOString().substring(0, 10);
+    let start_date = new Date(start_date0);
+    
+    // create elements
+    const streakCard = document.createElement('div');
+    streakCard.classList.add('streak-card');
+    document.querySelector('.streak-cont').appendChild(streakCard);
+
+    const newHabitName = document.createElement('div');
+    newHabitName.innerHTML = `<h3 class="habit-name">${habitData.habit}</h3>`
+    streakCard.appendChild(newHabitName);
+
+    // const newFreq = document.createElement('p');
+    // newFreq.innerHTML = `${habitData.frequency} time(s) per day`;
+    // streakCard.appendChild(newFreq);
+
+    const streakTable = document.createElement('table');
+    streakCard.appendChild(streakTable);
+
+    const streakTHead = document.createElement('thead');
+    streakTable.appendChild(streakTHead);
+
+    const headTr = document.createElement('tr');
+    streakTHead.appendChild(headTr);
+
+    const habitFacts = await getHabitFacts(id);
+    console.log(id, habitFacts);
+
+    console.log(start_date, end_date);
+    
+    let firstFactDay = end_date
+    // firstFactDay.setDate(firstFactDay.getDate() + 1)
+    
+    if (habitFacts.length != 0 ) {
+        firstFactDay = new Date(habitFacts[0].date);
+    }
+    // const firstFactDay = new Date(habitFacts[0].date) || new Date(9999-12-31);
+
+    // const firstFactDay = new Date(habitFacts[0].date);
+
+    for (let day = start_date; day <= end_date; day.setDate(day.getDate() + 1)) {
+        console.log('dates', day, firstFactDay)
+        if (day < firstFactDay) {
+            console.log('gray!')
+            appendGray(day);
+        } 
+    }
+    appendFacts(habitFacts, habitData.frequency);
+}
+
+function appendFacts(fact, plan) {
+    fact.forEach(f => appendFact(f,plan));
+}
+
+function appendFact(fact, plan) {
+    const headth = document.createElement('th');
+    headth.setAttribute('scope',"col");
+    const day = nameDayOfWeek(fact.date);
+    headth.innerHTML = day;
+    console.log(fact, plan)
+    if (Number(fact.streak_count) < plan) {
+        headth.classList.add('fact-notDone');
+    } else {
+        headth.classList.add('fact-Done');
+    }
+    document.querySelector('tr').appendChild(headth);
+};
+
+function appendGray(date) {
+    console.log('grayy')
+    const headth = document.createElement('th');
+    headth.setAttribute('scope',"col");
+    const day = nameDayOfWeek(date);
+    headth.innerHTML = day;
+    // console.log(fact, plan)
+    headth.classList.add('fact-grey');
+    document.querySelector('tr').appendChild(headth);
+};
+
+
+function nameDayOfWeek(dayF) {
+    const days = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
+    const day = new Date(dayF);
+    const dayWeekN = day.getDay();
+    return days[dayWeekN];
 }

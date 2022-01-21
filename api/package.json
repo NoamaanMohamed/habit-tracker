@@ -3,6 +3,10 @@
     "version": "1.0.0",
     "description": "",
     "main": "api/index.js",
+    "jest": {
+        "coverageReporters": ["lcov"],
+        "coverageDirectory": "./output/code-coverage/"
+    },
     "scripts": {
         "start": "nodemon index.js",
         "test": "jest --watchAll",

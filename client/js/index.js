@@ -1,5 +1,7 @@
 const nav = document.querySelector('nav');
 const main = document.querySelector('main');
+const footer = document.querySelector('footer');
+const body = document.querySelector('body');
 
 let togle = true;
 let path = '#';
@@ -25,6 +27,9 @@ document.addEventListener("click", function (e) {
 function updateMain(path) {
     main.innerHTML = '';
     nav.innerHTML = '';
+    footer.innerHTML = '';
+    body.classList.remove('pattern');
+    
     console.log("updateMain",path)
     if (path) {
         switch(path){
@@ -32,8 +37,8 @@ function updateMain(path) {
                 renderHomepage(); break;
             case '#dashboard':
                 renderMain(); break;
-            case '#streak':
-                renderStreak(); break;
+            // case '#streak':
+            //     renderStreak(); break;
             default:
                 // render404(); break;
                 renderHomepage(); break;

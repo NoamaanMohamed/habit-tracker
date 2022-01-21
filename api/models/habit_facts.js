@@ -31,13 +31,17 @@ module.exports =  class Habit_Facts{
 
     }
 
-    static create(hplan_id){
+    static create(hplan_id, date){
         return new Promise (async (resolve, reject) =>{
             try{
-
+                console.log("post fact for", hplan_id, date)
+                const newDate = new Date(date);
+                const newDateS = new Date(newDate).toISOString().slice(0, 19).replace('T', ' ');
+                console.log(newDateS);
                 // let habitplans = await Habit_Plan.findById(hplan_id);
                 // let result = await db.query(`INSERT INTO habit_facts(hplan_id,hfact_timestamp) VALUES ($1,CURRENT_TIMESTAMP);`,[habitplans.id]); resolve (result.rows[0]);
-                let result = await db.query(`INSERT INTO habit_facts(hplan_id, hfact_timestamp) VALUES ($1,CURRENT_TIMESTAMP) RETURNING *;`,[ hplan_id ]); 
+                // let result = await db.query(`INSERT INTO habit_facts(hplan_id, hfact_timestamp) VALUES ($1,CURRENT_TIMESTAMP) RETURNING *;`,[ hplan_id ]); 
+                let result = await db.query(`INSERT INTO habit_facts(hplan_id, hfact_timestamp) VALUES ($1,$2) RETURNING *;`,[ hplan_id, newDateS ]); 
                 console.log(result)
                 resolve (result.rows[0]);
             } catch (err) {

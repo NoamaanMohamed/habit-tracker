@@ -117,8 +117,18 @@ async function getHabitFacts(hplan_id){
             }
         }
         
+
         let url = new URL(`https://whispering-lowlands-57408.herokuapp.com/habitfacts/${hplan_id}`);
-        url.searchParams.append('date',document.querySelector('.inputHabitsDate').value);
+        // one week bhind period
+        let start_date = new Date(document.querySelector('.inputStreakDate').value)
+        let end_date = new Date(start_date);
+        end_date.setDate(end_date.getDate() - 7);
+        let end_date0 = new Date(end_date).toISOString().substring(0, 10);
+        console.log(start_date, end_date0)
+        url.searchParams.append('start_date', end_date0);
+        url.searchParams.append('end_date', document.querySelector('.inputStreakDate').value );
+        
+
         console.log(url)
         const response = await fetch(url, options);
         const data = await response.json();
@@ -131,3 +141,38 @@ async function getHabitFacts(hplan_id){
         console.warn(err);
     }
 }
+
+async function updateEndDate(e){
+    e.preventDefault();
+    // hplan_id = ;
+    console.log(e.target, e.target.getAttribute('data-id'))
+    const hplan_id = e.target.getAttribute('data-id');
+    console.log('id', hplan_id);
+    try {
+        const habitData = {
+            end_date: document.querySelector('.inputHabitsDate').value
+            };
+        console.log("update plan", habitData );
+        const options = {
+            method: 'PATCH',
+            body: JSON.stringify(habitData),
+            headers: {
+                'authorization': localStorage.getItem('token'),
+                'Content-Type': "application/json"
+            }
+        };
+        let url = new URL(`http://localhost:3000/habitplans/${hplan_id}`);
+        // url.searchParams.append('date',document.querySelector('.inputHabitsDate').value);
+        console.log(options)
+        
+        const response = await fetch(url, options);
+        const data = await response.json();
+        if(data.err){
+            console.warn(data.err);
+            logout();
+        };
+        return data;
+    } catch (err) {
+        console.warn(err);
+    };
+};

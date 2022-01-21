@@ -20,7 +20,7 @@ router.get('/:id', verifyToken, async (req, res) => {
 
 router.post('/', verifyToken, async (req,res) => {
     try {
-        const habitFact = await Habit_Facts.create(req.body.habit_id);
+        const habitFact = await Habit_Facts.create(req.body.habit_id,req.query.date);
         console.log(habitFact);
         res.status(201).json(habitFact)
 

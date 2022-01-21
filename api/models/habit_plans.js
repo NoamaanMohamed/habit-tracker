@@ -82,20 +82,21 @@ class Habit_Plan {
         });
     };
 
-    static findById(id,habitData){
+    static findById(id,habitDates){
         return new Promise (async (resolve, reject) => {
             try {
 
-                const {start_date,end_date} = habitData
-
+                const {start_date,end_date} = habitDates  
+                console.log(id, start_date, end_date)
                 let result = await db.query(`SELECT DATE(hfact_timestamp), count(*) AS streak_count
                                                 FROM habit_facts
                                                 WHERE hplan_id = $1
                                                 AND DATE(hfact_timestamp) BETWEEN $2 AND $3
                                                 GROUP BY DATE(hfact_timestamp)
                                                 ORDER BY DATE(hfact_timestamp);`, [ id, start_date,end_date ]);
-                let habitPlan = new Habit_Plan(result.rows[0]);
-                resolve(habitPlan);
+     
+                console.log(result.rows)
+                resolve(result.rows);
             } catch (err) {
                 reject('habit not found');
             };
@@ -131,7 +132,7 @@ class Habit_Plan {
         return new Promise (async (resolve, reject) =>{
             try{
                
-                const {end_date,id} = habitData
+                const {end_date, id} = habitData
                
                 let result = await db.query(`UPDATE habit_plans 
                                              SET end_date = $1
