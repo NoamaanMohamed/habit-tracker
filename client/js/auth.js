@@ -8,7 +8,8 @@ async function requestLogin(e){
         };
         const options = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': 'https://romantic-banach-959a43.netlify.app/' },
             body: JSON.stringify(loginData)
         }
         console.log(options)
@@ -34,7 +35,8 @@ async function requestRegistration(e) {
         };
         const options = {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: { 'Content-Type': 'application/json',
+            'Access-Control-Allow-Origin': 'https://romantic-banach-959a43.netlify.app/' },
             body: JSON.stringify(registerData)
         }
         console.log(options);
