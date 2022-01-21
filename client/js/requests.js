@@ -161,7 +161,7 @@ async function updateEndDate(e){
                 'Content-Type': "application/json"
             }
         };
-        let url = new URL(`http://localhost:3000/habitplans/${hplan_id}`);
+        let url = new URL(`https://whispering-lowlands-57408.herokuapp.com/habitplans/${hplan_id}`);
         // url.searchParams.append('date',document.querySelector('.inputHabitsDate').value);
         console.log(options)
         
